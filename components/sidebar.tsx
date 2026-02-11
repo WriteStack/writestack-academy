@@ -22,7 +22,10 @@ type SidebarProps = {
   activeSubcategory: string | null;
   isMobileMenuOpen: boolean;
   isWatched: (videoId: string) => boolean;
-  getCompletionStats: (videoIds: string[]) => { completed: number; total: number };
+  getCompletionStats: (videoIds: string[]) => {
+    completed: number;
+    total: number;
+  };
   onSectionToggle: (sectionId: string) => void;
   onSectionClick: (sectionId: string) => void;
   onSubcategoryClick: (sectionId: string, subcategory: string) => void;
@@ -52,8 +55,10 @@ export const Sidebar = ({
   return (
     <aside
       className={cn(
-        "fixed md:static inset-y-0 left-0 z-50 w-64 md:w-64 border-r border-border bg-background p-6 flex flex-col transition-transform duration-300 ease-in-out",
-        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        "fixed md:static inset-y-0 left-0 z-50 w-64 md:w-80 border-r border-border bg-background p-6 flex flex-col transition-transform duration-300 ease-in-out",
+        isMobileMenuOpen
+          ? "translate-x-0"
+          : "-translate-x-full md:translate-x-0"
       )}
     >
       {/* Logo */}
@@ -77,7 +82,6 @@ export const Sidebar = ({
           <span className="text-xl font-bold text-primary">WriteStack</span>
           <span className="text-sm font-normal text-primary/70">Academy</span>
         </div>
-        <FileText className="h-4 w-4 text-muted-foreground ml-auto" />
       </button>
 
       {/* Search Bar */}
@@ -91,12 +95,13 @@ export const Sidebar = ({
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 space-y-1 overflow-hidden">
+      <nav className="flex-1 min-h-0 space-y-1 overflow-y-auto">
         {navigationSections.map((section) => {
           const Icon = section.icon;
           const isExpanded = expandedSections.has(section.id);
           const isActive = activeSection === section.id;
-          const hasSubcategories = section.subcategories && section.subcategories.length > 0;
+          const hasSubcategories =
+            section.subcategories && section.subcategories.length > 0;
 
           const allVideoIds = getAllVideoIds(section);
           const stats = getCompletionStats(allVideoIds);
@@ -121,15 +126,19 @@ export const Sidebar = ({
                 }
                 variant={isActive && !activeSubcategory ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full justify-start",
-                  isActive && !activeSubcategory && "bg-accent text-accent-foreground"
+                  "w-full justify-start h-auto min-h-9 py-2 whitespace-normal text-left",
+                  isActive &&
+                    !activeSubcategory &&
+                    "bg-accent text-accent-foreground"
                 )}
                 tabIndex={0}
                 aria-label={section.title}
                 aria-expanded={hasSubcategories ? isExpanded : undefined}
               >
                 <Icon className="h-5 w-5 shrink-0" />
-                <span className="flex-1 text-left">{section.title}</span>
+                <span className="flex-1 min-w-0 text-left wrap-break-word">
+                  {section.title}
+                </span>
                 {hasSubcategories && (
                   <>
                     {isExpanded ? (
@@ -153,7 +162,10 @@ export const Sidebar = ({
                     <div
                       className="h-full bg-primary rounded-full transition-all duration-300 ease-out"
                       style={{
-                        width: stats.total > 0 ? `${(stats.completed / stats.total) * 100}%` : "0%",
+                        width:
+                          stats.total > 0
+                            ? `${(stats.completed / stats.total) * 100}%`
+                            : "0%",
                       }}
                     />
                   </div>
@@ -179,7 +191,7 @@ export const Sidebar = ({
                       variant="ghost"
                       size="sm"
                       className={cn(
-                        "w-full justify-start gap-2",
+                        "w-full justify-start gap-2 h-auto min-h-9 py-2 whitespace-normal text-left",
                         isActive && !activeSubcategory
                           ? "bg-primary/10 text-primary font-medium"
                           : "text-muted-foreground"
@@ -192,7 +204,9 @@ export const Sidebar = ({
                       ) : (
                         <Circle className="h-4 w-4 shrink-0" />
                       )}
-                      <span className="text-left">Welcome</span>
+                      <span className="text-left min-w-0 wrap-break-word">
+                        Welcome
+                      </span>
                     </Button>
                   )}
 
@@ -205,7 +219,9 @@ export const Sidebar = ({
                     return (
                       <Button
                         key={subcategory.name}
-                        onClick={() => onSubcategoryClick(section.id, subcategory.name)}
+                        onClick={() =>
+                          onSubcategoryClick(section.id, subcategory.name)
+                        }
                         onKeyDown={(e) =>
                           handleKeyDown(e, () =>
                             onSubcategoryClick(section.id, subcategory.name)
@@ -214,7 +230,7 @@ export const Sidebar = ({
                         variant="ghost"
                         size="sm"
                         className={cn(
-                          "w-full justify-start gap-2",
+                          "w-full justify-start gap-2 h-auto min-h-9 py-2 whitespace-normal text-left",
                           isSubActive
                             ? "bg-primary/10 text-primary font-medium"
                             : "text-muted-foreground"
@@ -227,7 +243,9 @@ export const Sidebar = ({
                         ) : (
                           <Circle className="h-4 w-4 shrink-0" />
                         )}
-                        <span className="text-left">{subcategory.name}</span>
+                        <span className="text-left min-w-0 wrap-break-word">
+                          {subcategory.name}
+                        </span>
                       </Button>
                     );
                   })}
