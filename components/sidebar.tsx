@@ -91,7 +91,7 @@ export const Sidebar = ({
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 space-y-1 overflow-y-auto">
+      <nav className="flex-1 space-y-1 overflow-hidden">
         {navigationSections.map((section) => {
           const Icon = section.icon;
           const isExpanded = expandedSections.has(section.id);
@@ -239,10 +239,10 @@ export const Sidebar = ({
       </nav>
 
       {/* Divider */}
-      <div className="border-t border-border my-6" />
+      {/* <div className="border-t border-border my-6" /> */}
 
       {/* Footer */}
-      <div className="mt-auto">
+      {/* <div className="mt-auto">
         <Button
           onClick={() => {}}
           onKeyDown={(e) => handleKeyDown(e, () => {})}
@@ -254,7 +254,7 @@ export const Sidebar = ({
         >
           New to WriteStack?
         </Button>
-      </div>
+      </div> */}
     </aside>
   );
 };

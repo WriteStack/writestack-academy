@@ -3,6 +3,7 @@ import type { BookOpen } from "lucide-react";
 export type Subcategory = {
   name: string;
   videoId: string;
+  cta: string;
 };
 
 export type NavigationSection = {

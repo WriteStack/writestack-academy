@@ -91,7 +91,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex min-h-screen bg-background relative">
+    <div className="flex h-screen overflow-hidden bg-background relative">
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
@@ -117,7 +117,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 p-8 space-y-6 overflow-y-auto">
+      <main className="flex-1 min-h-0 p-8 overflow-y-auto">
         {/* Mobile Burger Menu Button */}
         <Button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

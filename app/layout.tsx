@@ -18,19 +18,19 @@ export const metadata: Metadata = {
     template: "%s | WriteStack Academy",
   },
   description:
-    "Learn everything you need to know on how to use WriteStack to grow your LinkedIn audience and turn your followers into actual leads! Master notes generation, activity center, analytics, and more.",
+    "Learn everything you need to know on how to use WriteStack to grow your Substack audience and turn your followers into actual leads! Master notes generation, activity center, analytics, and more.",
   keywords: [
     "WriteStack",
     "WriteStack Academy",
-    "LinkedIn marketing",
+    "Substack marketing",
     "content creation",
     "social media",
-    "LinkedIn growth",
+    "Substack growth",
     "notes generation",
     "activity center",
     "analytics",
     "content strategy",
-    "LinkedIn automation",
+    "Substack automation",
   ],
   authors: [{ name: "WriteStack" }],
   creator: "WriteStack",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     siteName: "WriteStack Academy",
     title: "WriteStack Academy - Learn How to Use WriteStack",
     description:
-      "Learn everything you need to know on how to use WriteStack to grow your LinkedIn audience and turn your followers into actual leads!",
+      "Learn everything you need to know on how to use WriteStack to grow your Substack audience and turn your followers into actual leads!",
     images: [
       {
         url: "/og-image.jpg",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "WriteStack Academy - Learn How to Use WriteStack",
     description:
-      "Learn everything you need to know on how to use WriteStack to grow your LinkedIn audience and turn your followers into actual leads!",
+      "Learn everything you need to know on how to use WriteStack to grow your Substack audience and turn your followers into actual leads!",
     images: ["/og-image.jpg"],
     creator: "@writestack",
   },

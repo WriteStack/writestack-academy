@@ -4,6 +4,8 @@ import { CheckCircle2, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoomPlayer } from "@/components/loom-player";
+import { CtaBox } from "@/components/cta-box";
+import { EndOfVideoCta } from "@/components/end-of-video-cta";
 import type { NavigationSection } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +46,10 @@ export const EpisodeContent = ({
   const hasFirstSubcategory =
     section.subcategories && section.subcategories.length > 0;
 
+  const currentCta = section.subcategories?.find(
+    (sub) => sub.name === activeSubcategory
+  )?.cta;
+
   return (
     <Card className="border-0 shadow-sm">
       <CardContent className="p-6">
@@ -82,7 +88,7 @@ export const EpisodeContent = ({
               <CheckCircle2 className="h-4 w-4" />
               {watched ? "Watched" : "Mark as Watched"}
             </Button>
-          )}``
+          )}
 
           {/* Next Video Button */}
           {isWelcomeVideo && hasFirstSubcategory && (
@@ -98,6 +104,9 @@ export const EpisodeContent = ({
             </Button>
           )}
         </div>
+
+        {/* End of Video CTA */}
+        <EndOfVideoCta category={activeSubcategory ?? section.title} />
       </CardContent>
     </Card>
   );
