@@ -4,7 +4,6 @@ import { CheckCircle2, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoomPlayer } from "@/components/loom-player";
-import { CtaBox } from "@/components/cta-box";
 import { EndOfVideoCta } from "@/components/end-of-video-cta";
 import type { NavigationSection } from "@/lib/types";
 import { cn } from "@/lib/utils";
