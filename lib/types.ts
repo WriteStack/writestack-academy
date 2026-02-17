@@ -4,6 +4,7 @@ export type Subcategory = {
   name: string;
   videoId: string;
   cta: string;
+  minPlan?: "all" | "standard" | "premium";
 };
 
 export type NavigationSection = {

@@ -3,7 +3,6 @@
 import {
   GraduationCap,
   Search,
-  FileText,
   ChevronDown,
   ChevronRight,
   CheckCircle2,
@@ -14,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { NavigationSection } from "@/lib/types";
 import { getAllVideoIds } from "@/lib/data";
+import { SidebarPromotionWidget } from "@/components/sidebar-promotion-widget";
 
 type SidebarProps = {
   navigationSections: NavigationSection[];
@@ -256,23 +256,8 @@ export const Sidebar = ({
         })}
       </nav>
 
-      {/* Divider */}
-      {/* <div className="border-t border-border my-6" /> */}
-
-      {/* Footer */}
-      {/* <div className="mt-auto">
-        <Button
-          onClick={() => {}}
-          onKeyDown={(e) => handleKeyDown(e, () => {})}
-          variant="ghost"
-          size="sm"
-          className="text-sm text-muted-foreground hover:text-foreground w-full justify-start"
-          tabIndex={0}
-          aria-label="New to WriteStack?"
-        >
-          New to WriteStack?
-        </Button>
-      </div> */}
+      {/* Promotion Widget */}
+      <SidebarPromotionWidget />
     </aside>
   );
 };

@@ -12,11 +12,16 @@ export default function Home() {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(["how-to-use-writestack"])
   );
-  const [activeSection, setActiveSection] = useState<string>("how-to-use-writestack");
-  const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string>(
+    "how-to-use-writestack"
+  );
+  const [activeSubcategory, setActiveSubcategory] = useState<string | null>(
+    null
+  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const {
+    progress,
     isWatched,
     markAsWatched,
     toggleWatched,
@@ -51,16 +56,24 @@ export default function Home() {
     setIsMobileMenuOpen(false);
   };
 
-  const activeSectionData = navigationSections.find((s) => s.id === activeSection);
+  const activeSectionData = navigationSections.find(
+    (s) => s.id === activeSection
+  );
 
-  const getNextSubcategory = (): { sectionId: string; subcategory: string } | null => {
+  const getNextSubcategory = (): {
+    sectionId: string;
+    subcategory: string;
+  } | null => {
     if (!activeSubcategory || !activeSectionData?.subcategories) return null;
 
     const currentIndex = activeSectionData.subcategories.findIndex(
       (sub) => sub.name === activeSubcategory
     );
 
-    if (currentIndex === -1 || currentIndex === activeSectionData.subcategories.length - 1) {
+    if (
+      currentIndex === -1 ||
+      currentIndex === activeSectionData.subcategories.length - 1
+    ) {
       return null;
     }
 
@@ -80,7 +93,10 @@ export default function Home() {
 
   const handleFirstSubcategoryClick = () => {
     if (!activeSectionData?.subcategories?.length) return;
-    handleSubcategoryClick(activeSection, activeSectionData.subcategories[0].name);
+    handleSubcategoryClick(
+      activeSection,
+      activeSectionData.subcategories[0].name
+    );
   };
 
   const handleAutoMarkWatched = useCallback(
