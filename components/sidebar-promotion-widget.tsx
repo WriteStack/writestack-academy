@@ -71,6 +71,7 @@ export const SidebarPromotionWidget = () => {
 
   // Update state when all videos become complete
   useEffect(() => {
+    
     if (widgetState === "has-data-in-progress" && allVideosComplete) {
       setWidgetState("has-data-ready-to-claim");
     }
