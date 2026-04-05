@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   GraduationCap,
   Search,
@@ -9,10 +10,15 @@ import {
   Circle,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { NavigationSection } from "@/lib/types";
 import { getAllVideoIds } from "@/lib/data";
+import {
+  WELCOME_EPISODE_SLUG,
+  buildAcademyPath,
+  episodeSlugFromVideoName,
+} from "@/lib/academy-url";
 import { SidebarPromotionWidget } from "@/components/sidebar-promotion-widget";
 
 type SidebarProps = {
@@ -28,15 +34,8 @@ type SidebarProps = {
   };
   onSectionToggle: (sectionId: string) => void;
   onSectionClick: (sectionId: string) => void;
-  onSubcategoryClick: (sectionId: string, subcategory: string) => void;
+  onSubcategoryClick: () => void;
   onMobileMenuClose: () => void;
-};
-
-const handleKeyDown = (event: React.KeyboardEvent, action: () => void) => {
-  if (event.key === "Enter" || event.key === " ") {
-    event.preventDefault();
-    action();
-  }
 };
 
 export const Sidebar = ({
@@ -62,19 +61,19 @@ export const Sidebar = ({
       )}
     >
       {/* Logo */}
-      <button
+      <Link
+        href={buildAcademyPath(
+          navigationSections[0]?.id ?? "how-to-use-writestack",
+          WELCOME_EPISODE_SLUG
+        )}
+        scroll={false}
         onClick={() => {
-          onSectionClick("how-to-use-writestack");
+          onSectionClick(
+            navigationSections[0]?.id ?? "how-to-use-writestack"
+          );
           onMobileMenuClose();
         }}
-        onKeyDown={(e) =>
-          handleKeyDown(e, () => {
-            onSectionClick("how-to-use-writestack");
-            onMobileMenuClose();
-          })
-        }
         className="flex items-center gap-2 mb-6 cursor-pointer hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md p-1 -ml-1"
-        tabIndex={0}
         aria-label="WriteStack Academy - Go to welcome video"
       >
         <GraduationCap className="h-6 w-6 text-primary" />
@@ -82,7 +81,7 @@ export const Sidebar = ({
           <span className="text-xl font-bold text-primary">WriteStack</span>
           <span className="text-sm font-normal text-primary/70">Academy</span>
         </div>
-      </button>
+      </Link>
 
       {/* Search Bar */}
       <div className="relative mb-6">
@@ -109,29 +108,25 @@ export const Sidebar = ({
           return (
             <div key={section.id} className="space-y-1 cursor-pointer">
               {/* Section Header */}
-              <Button
+              <Link
+                href={buildAcademyPath(section.id, WELCOME_EPISODE_SLUG)}
+                scroll={false}
                 onClick={() => {
                   if (hasSubcategories) {
                     onSectionToggle(section.id);
                   }
                   onSectionClick(section.id);
                 }}
-                onKeyDown={(e) =>
-                  handleKeyDown(e, () => {
-                    if (hasSubcategories) {
-                      onSectionToggle(section.id);
-                    }
-                    onSectionClick(section.id);
-                  })
-                }
-                variant={isActive && !activeSubcategory ? "secondary" : "ghost"}
                 className={cn(
+                  buttonVariants({
+                    variant:
+                      isActive && !activeSubcategory ? "secondary" : "ghost",
+                  }),
                   "w-full justify-start h-auto min-h-9 py-2 whitespace-normal text-left",
                   isActive &&
                     !activeSubcategory &&
                     "bg-accent text-accent-foreground"
                 )}
-                tabIndex={0}
                 aria-label={section.title}
                 aria-expanded={hasSubcategories ? isExpanded : undefined}
               >
@@ -148,7 +143,7 @@ export const Sidebar = ({
                     )}
                   </>
                 )}
-              </Button>
+              </Link>
 
               {/* Progress Bar + Stats */}
               {hasSubcategories && isExpanded && (
@@ -177,26 +172,20 @@ export const Sidebar = ({
                 <div className="ml-8 space-y-1">
                   {/* Welcome video entry */}
                   {section.welcomeVideoId && (
-                    <Button
+                    <Link
+                      href={buildAcademyPath(section.id, WELCOME_EPISODE_SLUG)}
+                      scroll={false}
                       onClick={() => {
                         onSectionClick(section.id);
                         onMobileMenuClose();
                       }}
-                      onKeyDown={(e) =>
-                        handleKeyDown(e, () => {
-                          onSectionClick(section.id);
-                          onMobileMenuClose();
-                        })
-                      }
-                      variant="ghost"
-                      size="sm"
                       className={cn(
+                        buttonVariants({ variant: "ghost", size: "sm" }),
                         "w-full justify-start gap-2 h-auto min-h-9 py-2 whitespace-normal text-left",
                         isActive && !activeSubcategory
                           ? "bg-primary/10 text-primary font-medium"
                           : "text-muted-foreground"
                       )}
-                      tabIndex={0}
                       aria-label="Welcome to WriteStack Academy"
                     >
                       {isWatched(section.welcomeVideoId) ? (
@@ -207,7 +196,7 @@ export const Sidebar = ({
                       <span className="text-left min-w-0 wrap-break-word">
                         Welcome
                       </span>
-                    </Button>
+                    </Link>
                   )}
 
                   {section.subcategories?.map((subcategory) => {
@@ -217,25 +206,21 @@ export const Sidebar = ({
                     const watched = isWatched(subcategory.videoId);
 
                     return (
-                      <Button
+                      <Link
                         key={subcategory.name}
-                        onClick={() =>
-                          onSubcategoryClick(section.id, subcategory.name)
-                        }
-                        onKeyDown={(e) =>
-                          handleKeyDown(e, () =>
-                            onSubcategoryClick(section.id, subcategory.name)
-                          )
-                        }
-                        variant="ghost"
-                        size="sm"
+                        href={buildAcademyPath(
+                          section.id,
+                          episodeSlugFromVideoName(subcategory.name)
+                        )}
+                        scroll={false}
+                        onClick={() => onSubcategoryClick()}
                         className={cn(
+                          buttonVariants({ variant: "ghost", size: "sm" }),
                           "w-full justify-start gap-2 h-auto min-h-9 py-2 whitespace-normal text-left",
                           isSubActive
                             ? "bg-primary/10 text-primary font-medium"
                             : "text-muted-foreground"
                         )}
-                        tabIndex={0}
                         aria-label={subcategory.name}
                       >
                         {watched ? (
@@ -246,7 +231,7 @@ export const Sidebar = ({
                         <span className="text-left min-w-0 wrap-break-word">
                           {subcategory.name}
                         </span>
-                      </Button>
+                      </Link>
                     );
                   })}
                 </div>

@@ -1,27 +1,59 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Suspense, useState, useCallback, useMemo } from "react";
 import { Menu, X } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/sidebar";
 import { EpisodeContent } from "@/components/episode-content";
 import { useProgress } from "@/hooks/use-progress";
 import { navigationSections } from "@/lib/data";
+import {
+  WELCOME_EPISODE_SLUG,
+  buildAcademyPath,
+  episodeSlugFromVideoName,
+  findSubcategoryNameByEpisodeSlug,
+} from "@/lib/academy-url";
 
-export default function Home() {
+const HomeContent = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const sectionIdFromUrl = searchParams.get("section");
+  const episodeSlugFromUrl = searchParams.get("episode");
+
+  const defaultSectionId = navigationSections[0]?.id ?? "how-to-use-writestack";
+
+  const activeSection =
+    sectionIdFromUrl &&
+    navigationSections.some((s) => s.id === sectionIdFromUrl)
+      ? sectionIdFromUrl
+      : defaultSectionId;
+
+  const activeSectionData = navigationSections.find(
+    (s) => s.id === activeSection
+  )!;
+
+  const episodeSlug =
+    episodeSlugFromUrl?.trim() || WELCOME_EPISODE_SLUG;
+
+  const activeSubcategory: string | null =
+    episodeSlug === WELCOME_EPISODE_SLUG
+      ? null
+      : findSubcategoryNameByEpisodeSlug(activeSectionData, episodeSlug);
+
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
-    new Set(["how-to-use-writestack"])
-  );
-  const [activeSection, setActiveSection] = useState<string>(
-    "how-to-use-writestack"
-  );
-  const [activeSubcategory, setActiveSubcategory] = useState<string | null>(
-    null
+    () => new Set([defaultSectionId])
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
+  const sidebarExpandedSections = useMemo(() => {
+    const next = new Set(expandedSections);
+    next.add(activeSection);
+    return next;
+  }, [expandedSections, activeSection]);
+
   const {
-    progress,
     isWatched,
     markAsWatched,
     toggleWatched,
@@ -39,8 +71,6 @@ export default function Home() {
   };
 
   const handleSectionClick = (sectionId: string) => {
-    setActiveSection(sectionId);
-    setActiveSubcategory(null);
     const section = navigationSections.find((s) => s.id === sectionId);
     if (section?.subcategories && section.subcategories.length > 0) {
       if (!expandedSections.has(sectionId)) {
@@ -50,15 +80,9 @@ export default function Home() {
     setIsMobileMenuOpen(false);
   };
 
-  const handleSubcategoryClick = (sectionId: string, subcategory: string) => {
-    setActiveSection(sectionId);
-    setActiveSubcategory(subcategory);
+  const handleSubcategoryClick = () => {
     setIsMobileMenuOpen(false);
   };
-
-  const activeSectionData = navigationSections.find(
-    (s) => s.id === activeSection
-  );
 
   const getNextSubcategory = (): {
     sectionId: string;
@@ -87,15 +111,22 @@ export default function Home() {
   const handleNextVideo = () => {
     const next = getNextSubcategory();
     if (next) {
-      handleSubcategoryClick(next.sectionId, next.subcategory);
+      router.push(
+        buildAcademyPath(
+          next.sectionId,
+          episodeSlugFromVideoName(next.subcategory)
+        ),
+        { scroll: false }
+      );
     }
   };
 
   const handleFirstSubcategoryClick = () => {
     if (!activeSectionData?.subcategories?.length) return;
-    handleSubcategoryClick(
-      activeSection,
-      activeSectionData.subcategories[0].name
+    const first = activeSectionData.subcategories[0];
+    router.push(
+      buildAcademyPath(activeSection, episodeSlugFromVideoName(first.name)),
+      { scroll: false }
     );
   };
 
@@ -120,7 +151,7 @@ export default function Home() {
       {/* Left Sidebar */}
       <Sidebar
         navigationSections={navigationSections}
-        expandedSections={expandedSections}
+        expandedSections={sidebarExpandedSections}
         activeSection={activeSection}
         activeSubcategory={activeSubcategory}
         isMobileMenuOpen={isMobileMenuOpen}
@@ -164,5 +195,19 @@ export default function Home() {
         )}
       </main>
     </div>
+  );
+};
+
+const HomeFallback = () => (
+  <div className="flex h-screen items-center justify-center bg-background text-muted-foreground">
+    Loading…
+  </div>
+);
+
+export default function Home() {
+  return (
+    <Suspense fallback={<HomeFallback />}>
+      <HomeContent />
+    </Suspense>
   );
 }
