@@ -76,6 +76,7 @@ export const Sidebar = ({
         className="flex items-center gap-2 mb-6 cursor-pointer hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md p-1 -ml-1"
         aria-label="WriteStack Academy - Go to welcome video"
       >
+        
         <GraduationCap className="h-6 w-6 text-primary" />
         <div className="flex items-baseline gap-1">
           <span className="text-xl font-bold text-primary">WriteStack</span>
