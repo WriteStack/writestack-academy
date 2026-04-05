@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@writestack/logger": "github:WriteStack/writestack-logger",
     "axios": "^1.13.5",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
