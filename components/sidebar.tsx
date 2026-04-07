@@ -243,7 +243,7 @@ export const Sidebar = ({
       </nav>
 
       {/* Promotion Widget */}
-      <SidebarPromotionWidget />
+      {/* <SidebarPromotionWidget /> */}
     </aside>
   );
 };
