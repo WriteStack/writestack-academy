@@ -6,20 +6,44 @@ export const navigationSections: NavigationSection[] = [
     id: "how-to-use-writestack",
     title: "How to Use WriteStack",
     icon: BookOpen,
-    welcomeVideoId: "88ab5f2c64984f65817386e5f8a555f8",
+    welcomeVideoId: "777210bf4a974f77b34ad873fb76b786",
     subcategories: [
       {
-        name: "Build First Queue",
-        videoId: "80f02316aa604d6da04d920a8f05451e",
-        cta: "Build your first queue. Get started with WriteStack today.",
+        name: "My Notes",
+        videoId: "ca8bf956f36d4e11af87a1d005a84a7a",
+        cta: "My Notes section complete guide.",
         minPlan: "all",
       },
       {
-        name: "Generate Personalized Notes",
-        videoId: "41e975405c544f779e60602ab9e6f27d",
-        cta: "Personalize at scale. Try WriteStack personalized notes.",
+        name: "WriteStack Settings",
+        videoId: "a44a9ced151449ad81bf970ce0abd2f0",
+        cta: "Configure your WriteStack settings.",
         minPlan: "all",
       },
+      {
+        name: "Deep Statistics",
+        videoId: "af55483033bd480bb5eb59bbb0f99905",
+        cta: "Deep Statistics complete guide.",
+        minPlan: "standard",
+      },
+      // {
+      //   name: "Build First Queue",
+      //   videoId: "80f02316aa604d6da04d920a8f05451e",
+      //   cta: "Build your first queue. Get started with WriteStack today.",
+      //   minPlan: "all",
+      // },
+      {
+        name: "WriteStack Follows",
+        videoId: "fc0604501a3948119a4c5e119cd96e50",
+        cta: "Follow your favorite creators on WriteStack.",
+        minPlan: "all",
+      },
+      // {
+      //   name: "Generate Personalized Notes",
+      //   videoId: "41e975405c544f779e60602ab9e6f27d",
+      //   cta: "Personalize at scale. Try WriteStack personalized notes.",
+      //   minPlan: "all",
+      // },
       {
         name: "Enhance Notes Generation",
         videoId: "7107a24668a4420bb279121640bbee47",
@@ -63,6 +87,6 @@ export const getAllVideoIds = (section: NavigationSection): string[] => {
 export const getTotalVideoCount = (): number => {
   return navigationSections.reduce(
     (acc, section) => acc + getAllVideoIds(section).length,
-    0
+    0,
   );
 };
