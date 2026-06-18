@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const WRITESTACK_API_URL =
-  process.env.WRITESTACK_API_URL || "https://writestack.com";
+  process.env.WRITESTACK_API_URL || "https://writestack.io";
 const ACADEMY_SECRET = process.env.WRITESTACK_ACADEMY_SECRET;
 
 export async function POST(request: NextRequest) {

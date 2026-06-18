@@ -12,7 +12,7 @@ type CtaBoxProps = {
 export const CtaBox = ({
   text,
   actionLabel = "Try WriteStack Free",
-  href = "https://writestack.com",
+  href = "https://writestack.io",
 }: CtaBoxProps) => {
   return (
     <div className="rounded-xl border border-primary/20 bg-linear-to-br from-primary/5 via-background to-primary/5 p-4 md:p-5">

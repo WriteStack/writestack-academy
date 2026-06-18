@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   authors: [{ name: "WriteStack" }],
   creator: "WriteStack",
   publisher: "WriteStack",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://academy.writestack.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://academy.writestack.io"),
   alternates: {
     canonical: "/",
   },

@@ -30,7 +30,7 @@ export const EndOfVideoCta = ({ category }: { category: string }) => {
         aria-label="Try WriteStack free"
       >
         <Link
-          href={`https://writestack.com?utm_source=writestack-academy&utm_medium=video&utm_campaign=writestack-academy&utm_content=${getSlugifiedCategory(category)}`}
+          href={`https://writestack.io?utm_source=writestack-academy&utm_medium=video&utm_campaign=writestack-academy&utm_content=${getSlugifiedCategory(category)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center w-full h-full"
